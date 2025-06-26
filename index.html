@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Marketing Proposal Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- jsPDF for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <!-- Stage 1: Proposal Setup Form -->
+    <div id="setup-stage" class="stage active">
+        <header class="setup-header">
+            <div class="container">
+                <h1>Digital Marketing Proposal Generator</h1>
+                <p>Create professional proposals for Facebook, Instagram, and Google Ads services</p>
+            </div>
+        </header>
+
+        <main class="setup-content">
+            <div class="container">
+                <form id="proposal-form" class="proposal-form">
+                    <!-- Company Information -->
+                    <section class="form-section">
+                        <h2>Company Information</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="service-provider" class="form-label">Service Provider Company Name</label>
+                                <input type="text" id="service-provider" name="serviceProvider" class="form-control" value="Mackstor Designs" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="client-name" class="form-label">Client Company Name</label>
+                                <input type="text" id="client-name" name="clientName" class="form-control" value="Malbor Coatings" required>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Service Selection -->
+                    <section class="form-section">
+                        <h2>Service Selection</h2>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="services" value="facebook" id="facebook-service" checked>
+                                <span class="checkmark"></span>
+                                Facebook & Instagram Ads Management
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="services" value="google" id="google-service" checked>
+                                <span class="checkmark"></span>
+                                Google Ads Management
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="services" value="combined" id="combined-service">
+                                <span class="checkmark"></span>
+                                Both Services (Combined Package)
+                            </label>
+                        </div>
+                    </section>
+
+                    <!-- Budget Configuration -->
+                    <section class="form-section">
+                        <h2>Budget Configuration</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="facebook-mgmt-fee" class="form-label">Facebook Monthly Management Fee ($)</label>
+                                <input type="number" id="facebook-mgmt-fee" name="facebookMgmtFee" class="form-control" value="350" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="google-mgmt-fee" class="form-label">Google Monthly Management Fee ($)</label>
+                                <input type="number" id="google-mgmt-fee" name="googleMgmtFee" class="form-control" value="350" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="facebook-ad-spend-min" class="form-label">Facebook Ad Spend Min ($)</label>
+                                <input type="number" id="facebook-ad-spend-min" name="facebookAdSpendMin" class="form-control" value="300" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="facebook-ad-spend-max" class="form-label">Facebook Ad Spend Max ($)</label>
+                                <input type="number" id="facebook-ad-spend-max" name="facebookAdSpendMax" class="form-control" value="500" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="google-ad-spend-min" class="form-label">Google Ad Spend Min ($)</label>
+                                <input type="number" id="google-ad-spend-min" name="googleAdSpendMin" class="form-control" value="500" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="google-ad-spend-max" class="form-label">Google Ad Spend Max ($)</label>
+                                <input type="number" id="google-ad-spend-max" name="googleAdSpendMax" class="form-control" value="800" min="0">
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Performance Targets -->
+                    <section class="form-section">
+                        <h2>Performance Targets</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="monthly-impressions" class="form-label">Monthly Impressions Target</label>
+                                <input type="number" id="monthly-impressions" name="monthlyImpressions" class="form-control" value="100000" min="1000">
+                            </div>
+                            <div class="form-group">
+                                <label for="qualified-leads" class="form-label">Qualified Leads per Month</label>
+                                <input type="number" id="qualified-leads" name="qualifiedLeads" class="form-control" value="100" min="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="target-ctr" class="form-label">Target CTR Percentage (%)</label>
+                                <input type="number" id="target-ctr" name="targetCTR" class="form-control" value="2.5" min="0.1" max="100" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="max-cost-per-lead" class="form-label">Maximum Cost per Lead ($)</label>
+                                <input type="number" id="max-cost-per-lead" name="maxCostPerLead" class="form-control" value="15" min="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="target-roas" class="form-label">Target ROAS Ratio</label>
+                                <input type="number" id="target-roas" name="targetROAS" class="form-control" value="4.0" min="1" step="0.1">
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Project Timeline -->
+                    <section class="form-section">
+                        <h2>Project Timeline</h2>
+                        <div class="form-group">
+                            <label for="project-timeline" class="form-label">Project Duration</label>
+                            <select id="project-timeline" name="projectTimeline" class="form-control">
+                                <option value="1-3">1-3 months</option>
+                                <option value="3-6" selected>3-6 months</option>
+                                <option value="6+">6+ months</option>
+                            </select>
+                        </div>
+                    </section>
+
+                    <!-- Generate Button -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn--primary btn--lg btn--full-width">
+                            📊 Generate Proposal Report
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Stage 2: Generated Proposal Dashboard -->
+    <div id="dashboard-stage" class="stage">
+        <!-- Header Section -->
+        <header class="dashboard-header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="header-info">
+                        <h1 id="proposal-title">Digital Marketing Proposal</h1>
+                        <div class="company-details">
+                            <p><strong>Service Provider:</strong> <span id="display-service-provider">Mackstor Designs</span></p>
+                            <p><strong>Client:</strong> <span id="display-client-name">Malbor Coatings</span></p>
+                            <p><strong>Date:</strong> <span id="proposal-date"></span></p>
+                        </div>
+                    </div>
+                    <div class="header-controls">
+                        <button id="copy-report-btn" class="btn btn--secondary btn--sm">📋 Copy Report to Clipboard</button>
+                        <button id="download-pdf-btn" class="btn btn--primary btn--sm">📄 Download PDF Report</button>
+                        <button id="edit-parameters-btn" class="btn btn--outline btn--sm">✏️ Edit Parameters</button>
+                        <button id="reset-default-btn" class="btn btn--outline btn--sm">🔄 Reset to Default</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="dashboard-nav">
+            <div class="container">
+                <div class="nav-tabs">
+                    <button class="nav-tab active" data-section="executive-summary">📊 Executive Summary</button>
+                    <button class="nav-tab" data-section="facebook-strategy">📱 Facebook & Instagram</button>
+                    <button class="nav-tab" data-section="google-strategy">🔍 Google Ads</button>
+                    <button class="nav-tab" data-section="platform-comparison">⚖️ Platform Comparison</button>
+                    <button class="nav-tab" data-section="investment-summary">💰 Investment Summary</button>
+                    <button class="nav-tab" data-section="project-timeline">📅 Project Timeline</button>
+                    <button class="nav-tab" data-section="next-steps">📞 Next Steps</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <div class="container">
+                <!-- Executive Summary Section -->
+                <section id="executive-summary" class="content-section active">
+                    <h2>Executive Summary</h2>
+                    <div class="summary-grid">
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Campaign Objectives</h3>
+                                <ul id="campaign-objectives">
+                                    <li>Increase brand recognition and awareness</li>
+                                    <li>Generate qualified leads for sales team</li>
+                                    <li>Drive quality traffic to website</li>
+                                    <li>Improve conversion rates and ROI</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Expected Outcomes</h3>
+                                <ul id="expected-outcomes">
+                                    <li>Monthly impressions: <span id="summary-impressions">100,000+</span></li>
+                                    <li>Qualified leads: <span id="summary-leads">100+</span> per month</li>
+                                    <li>Target CTR: <span id="summary-ctr">2.5%</span></li>
+                                    <li>Maximum cost per lead: $<span id="summary-cpl">15</span></li>
+                                    <li>Target ROAS: <span id="summary-roas">4.0</span>:1</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Facebook Strategy Section -->
+                <section id="facebook-strategy" class="content-section">
+                    <h2>Facebook & Instagram Ads Strategy</h2>
+                    <div class="strategy-grid">
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Campaign Objectives</h3>
+                                <ul>
+                                    <li>Brand Awareness: Reach at least 50,000 targeted impressions/month</li>
+                                    <li>Lead Generation: Generate 100+ qualified leads/month</li>
+                                    <li>Website Traffic: Drive 1,000+ monthly visits to landing page</li>
+                                    <li>Conversion Campaigns: Achieve 4-6% conversion rate on retargeting ads</li>
+                                    <li>Retargeting Engagement: Recover at least 30% of warm traffic</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Budget Breakdown</h3>
+                                <div class="budget-table">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Campaign Type</th>
+                                                <th>Daily Budget</th>
+                                                <th>Monthly Budget</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Awareness</td>
+                                                <td>$10</td>
+                                                <td>$300</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Traffic</td>
+                                                <td>$15</td>
+                                                <td>$450</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Lead Generation</td>
+                                                <td>$25</td>
+                                                <td>$750</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Retargeting</td>
+                                                <td>$20</td>
+                                                <td>$600</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Testing & Optimization</td>
+                                                <td>$10</td>
+                                                <td>$300</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Google Strategy Section -->
+                <section id="google-strategy" class="content-section">
+                    <h2>Google Ads Strategy</h2>
+                    <div class="strategy-grid">
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Campaign Types</h3>
+                                <ul>
+                                    <li><strong>Search Ads:</strong> Capture high-intent traffic from Google searches</li>
+                                    <li><strong>Display Ads:</strong> Reach passive audiences across websites & apps</li>
+                                    <li><strong>YouTube Ads:</strong> Promote video content to targeted viewers</li>
+                                    <li><strong>Call-Only Ads:</strong> Drive direct phone leads (ideal for services)</li>
+                                    <li><strong>Remarketing:</strong> Re-engage past visitors or abandoned conversions</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Deliverables</h3>
+                                <ul>
+                                    <li>Campaign Setup (Search/Display)</li>
+                                    <li>Keyword Research & Audience Setup</li>
+                                    <li>Ad Copywriting & Extensions</li>
+                                    <li>Conversion Tracking Installation</li>
+                                    <li>Weekly Monitoring & Optimization</li>
+                                    <li>Monthly Analytics Report</li>
+                                    <li>Strategic Consulting & Support</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Platform Comparison Section -->
+                <section id="platform-comparison" class="content-section">
+                    <h2>Platform Comparison</h2>
+                    <div class="comparison-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>Facebook/Instagram</th>
+                                    <th>Google Ads</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Platform Type</td>
+                                    <td>Social Media (Meta platforms)</td>
+                                    <td>Search Engine + Display Network + YouTube</td>
+                                </tr>
+                                <tr>
+                                    <td>User Intent</td>
+                                    <td>Passive intent – users scroll and discover ads</td>
+                                    <td>Active intent – users are actively searching</td>
+                                </tr>
+                                <tr>
+                                    <td>Best For</td>
+                                    <td>Brand awareness, social engagement, visual storytelling</td>
+                                    <td>Lead generation, sales, service-based keywords</td>
+                                </tr>
+                                <tr>
+                                    <td>Cost Structure</td>
+                                    <td>CPC, CPM, CPA; generally lower cost per click</td>
+                                    <td>CPC, CPA; can be more competitive and higher CPC</td>
+                                </tr>
+                                <tr>
+                                    <td>Creative Requirements</td>
+                                    <td>Visual-first: image/video focused</td>
+                                    <td>Text-first (Search), Visual (Display/YouTube)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Investment Summary Section -->
+                <section id="investment-summary" class="content-section">
+                    <h2>Investment Summary</h2>
+                    <div class="pricing-cards">
+                        <div class="card pricing-card">
+                            <div class="card__body">
+                                <h3>📱 Facebook & Instagram</h3>
+                                <div class="pricing-details">
+                                    <div class="price-item">
+                                        <span>Management Fee</span>
+                                        <span>$<span id="fb-mgmt-display">350</span>/month</span>
+                                    </div>
+                                    <div class="price-item">
+                                        <span>Recommended Ad Spend</span>
+                                        <span>$<span id="fb-spend-min-display">300</span> - $<span id="fb-spend-max-display">500</span>/month</span>
+                                    </div>
+                                    <div class="price-item total-item">
+                                        <span><strong>Total Monthly Investment</strong></span>
+                                        <span><strong>$<span id="fb-total-display">650</span> - $<span id="fb-total-max-display">850</span></strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card pricing-card recommended">
+                            <div class="card__body">
+                                <h3>🔍 Google Ads</h3>
+                                <div class="pricing-details">
+                                    <div class="price-item">
+                                        <span>Management Fee</span>
+                                        <span>$<span id="google-mgmt-display">350</span>/month</span>
+                                    </div>
+                                    <div class="price-item">
+                                        <span>Recommended Ad Spend</span>
+                                        <span>$<span id="google-spend-min-display">500</span> - $<span id="google-spend-max-display">800</span>/month</span>
+                                    </div>
+                                    <div class="price-item total-item">
+                                        <span><strong>Total Monthly Investment</strong></span>
+                                        <span><strong>$<span id="google-total-display">850</span> - $<span id="google-total-max-display">1,150</span></strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card pricing-card premium">
+                            <div class="card__body">
+                                <h3>🚀 Combined Package</h3>
+                                <div class="pricing-details">
+                                    <div class="price-item">
+                                        <span>Combined Management</span>
+                                        <span>$<span id="combined-mgmt-display">700</span>/month</span>
+                                    </div>
+                                    <div class="price-item">
+                                        <span>Combined Ad Spend</span>
+                                        <span>$<span id="combined-spend-min-display">800</span> - $<span id="combined-spend-max-display">1,300</span>/month</span>
+                                    </div>
+                                    <div class="price-item total-item">
+                                        <span><strong>Total Package Investment</strong></span>
+                                        <span><strong>$<span id="combined-total-display">1,500</span> - $<span id="combined-total-max-display">2,000</span></strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Project Timeline Section -->
+                <section id="project-timeline" class="content-section">
+                    <h2>Project Timeline</h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h3>Week 1-2: Setup & Research</h3>
+                                <ul>
+                                    <li>Business analysis and audience research</li>
+                                    <li>Competitor analysis and market research</li>
+                                    <li>Campaign strategy development</li>
+                                    <li>Account setup and configuration</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h3>Week 3-4: Campaign Launch</h3>
+                                <ul>
+                                    <li>Creative development and approval</li>
+                                    <li>Campaign activation and monitoring</li>
+                                    <li>Initial performance tracking</li>
+                                    <li>Quick optimizations based on early data</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h3>Month 2+: Optimization & Scaling</h3>
+                                <ul>
+                                    <li>Weekly performance analysis</li>
+                                    <li>Bi-weekly optimization adjustments</li>
+                                    <li>Monthly comprehensive reporting</li>
+                                    <li>Scaling successful campaigns</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Next Steps Section -->
+                <section id="next-steps" class="content-section">
+                    <h2>Next Steps</h2>
+                    <div class="next-steps-grid">
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>📋 Action Items</h3>
+                                <div class="steps-list">
+                                    <div class="step-item">
+                                        <span class="step-number">1</span>
+                                        <p>Review and approve this proposal</p>
+                                    </div>
+                                    <div class="step-item">
+                                        <span class="step-number">2</span>
+                                        <p>Sign service agreement and provide access</p>
+                                    </div>
+                                    <div class="step-item">
+                                        <span class="step-number">3</span>
+                                        <p>Schedule kick-off meeting</p>
+                                    </div>
+                                    <div class="step-item">
+                                        <span class="step-number">4</span>
+                                        <p>Begin campaign setup and implementation</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>📞 Contact Information</h3>
+                                <p>Ready to get started? Contact us to move forward with this proposal.</p>
+                                <div class="contact-info">
+                                    <p><strong>Email:</strong> contact@mackstordesigns.com</p>
+                                    <p><strong>Phone:</strong> (555) 123-4567</p>
+                                    <p><strong>Website:</strong> www.mackstordesigns.com</p>
+                                </div>
+                                <p><em>This proposal is valid for 30 days from the date generated.</em></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p>Generating proposal...</p>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
